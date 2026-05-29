@@ -1,6 +1,6 @@
 Secure Autentication Module For OS
 
-📌 Project Overview 
+📌 Project Overview :- 
 The Secure Authentication Module for Operating Systems enhances system security by verifying user identity, managing login sessions, and preventing unauthorized access. It supports password encryption, OTP-based multi-factor authentication, and admin-controlled account management. This module ensures safe authentication, quick recovery in case of compromise, and efficient monitoring of user activity at the OS level.
 
 🎯 Features

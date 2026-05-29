@@ -4,121 +4,223 @@ include_once '../includes/functions.php';
 include('../config/db.php');
 include('../includes/log_action.php');
 ?>
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>Login</title>
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(to right, #dbeeff, #eaf5ff);
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Secure Auth</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #eef4ff;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #475569;
+            --border: #dbeafe;
+        }
 
-    h2 {
-    text-align: center;
-    color: #1e3a8a;
-    font-size: 40px;
-    margin-bottom: 25px;
-    transition: color 0.3s ease;
-    position: absolute;
-    top: 50px;
-    right: 680px;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-    form {
-  height: 525px;
-  width: 500px;
-  border-radius: 30px 0px;
-  align-content: center;
-  justify-items: center;
-  justify-self: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e6f0ff 0%, #f8fbff 45%, #ffffff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text);
+        }
 
-    label {
-        margin-left: 200px !important;
-        width: 100%;
-        font-size: 16px;
-        font-weight: 600;
-        color: #374151;
-        display: block;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 2px;
-    }
+        .page-wrap {
+            width: 100%;
+            max-width: 920px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
 
+        .brand-panel {
+            padding: 40px 35px;
+            border-radius: 32px;
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.18);
+        }
 
-    input{
-        margin-left: 100px !important;
-        padding: 7px 15px;
-  margin: 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  width: 250px;
-  border-style: hidden;
-  box-shadow: 0px 0px 10px 0px #d1d5db;
-  color: #858484 !important;
-  border: 2px solid #d1d5db;
-  transition: all 0.3s ease;
-    }
+        .brand-panel h1 {
+            margin: 0 0 16px;
+            font-size: 2.8rem;
+            line-height: 1.05;
+        }
 
-    input:focus {
-        border-color: #2563eb;
-        outline: none;
-    }
+        .brand-panel p {
+            margin: 0 0 24px;
+            color: rgba(255,255,255,0.86);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
 
-    button {
-        margin-top: 30px;
-         margin-left: 120px !important;
-        width: 50%;
-        background-color: #2563eb;
-        color: white;
-        font-size: 16px;
-        font-weight: 600;
-        border: none;
-        border-radius: 10px;
-        padding: 12px;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-    }
+        .brand-panel .feature {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: flex-start;
+        }
 
-    button:hover {
-        background-color: #1d4ed8;
-        transform: translateY(-2px);
-    }
+        .brand-panel .feature-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.18);
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+        }
 
-    p {
-    text-align: center;
-    color: #1a2d57;
-    font-size: 18px;
-}
+        .brand-panel .feature-text {
+            font-size: 0.96rem;
+            color: rgba(255,255,255,0.92);
+        }
 
-    a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 600;
-    position: relative;
-    bottom: -180px;
-    right: 320px;
-}
+        .login-card {
+            background: var(--card);
+            border-radius: 32px;
+            padding: 42px 36px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
 
-    a:hover {
-        text-decoration: underline;
-    }
-</style>
-</head><body>
-<h2>Login</h2>
-<div class="login-form">
-<form method="POST" action="../includes/auth.php">
-    <label>Email:</label> <input type="email" name="email" required><br>
-   <label> Password:</label> <input type="password" name="password" required><br>
-    <button type="submit" name="login">Login</button>
-</form>
-</div>
-<div class="para-style">
-<p><a href="forgot_password.php">Forgot Password?</a></p>
-<p><a href="register.php">Create new account</a></p>
-</div>
-</body></html>
+        .login-card h2 {
+            margin: 0 0 10px;
+            font-size: 2rem;
+            letter-spacing: -0.03em;
+        }
+
+        .login-card p.subtitle {
+            margin: 0 0 28px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .input-group {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 16px;
+            font-size: 1rem;
+            color: var(--text);
+            background: #f8fbff;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        }
+
+        .btn-primary {
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .login-card .link-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        .login-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-card a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .page-wrap {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrap">
+        <section class="brand-panel">
+            <h1>Secure Authentication</h1>
+            <p>Fast login, secure verification, and easy account access. Sign in and get started with your secure session.</p>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-text">OTP verification for all sign-ins</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-text">Strong security and safe sessions</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✨</div>
+                <div class="feature-text">Modern dashboard experience</div>
+            </div>
+        </section>
+
+        <section class="login-card">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Login with your email and password to continue. A verification OTP will be sent to your inbox.</p>
+            <form method="POST" action="../includes/auth.php">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button class="btn-primary" type="submit" name="login">Login</button>
+            </form>
+            <div class="link-row">
+                <a href="forgot_password.php">Forgot Password?</a>
+                <a href="register.php">Create new account</a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

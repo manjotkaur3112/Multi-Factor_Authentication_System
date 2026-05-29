@@ -3,215 +3,252 @@ include_once '../includes/functions.php';
 include('../config/db.php'); 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset='utf-8'>
-    <title>Register</title>
-
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Register | Secure Auth</title>
     <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #dbeafe, #eff6ff);
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        margin: 0;
-    }
-
-    .register-container {
-        background: #fff;
-        padding: 40px 50px;
-        border-radius: 20px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        width: 380px;
-        opacity: 0;
-        transform: translateY(40px);
-        animation: fadeInUp 1s ease-out forwards;
-    }
-
-    @keyframes fadeInUp {
-        0% {
-            opacity: 0;
-            transform: translateY(40px);
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #eef4ff;
+            --card: #ffffff;
+            --text: #111827;
+            --muted: #475569;
+            --border: #dbeafe;
         }
-        100% {
-            opacity: 1;
-            transform: translateY(0);
+
+        * {
+            box-sizing: border-box;
         }
-    }
 
-   h2 {
-    text-align: center;
-    color: #1e3a8a;
-    font-size: 40px;
-    margin-bottom: 25px;
-    transition: color 0.3s ease;
-    position: absolute;
-    top: 0;
-    right: 570px;
-}
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f4f8ff 0%, #eef6ff 45%, #ffffff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text);
+        }
 
-    h2:hover {
-        color: #2563eb;
-    }
+        .page-wrap {
+            width: 100%;
+            max-width: 980px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 28px;
+            align-items: center;
+        }
 
+        .info-panel {
+            padding: 38px 38px 36px;
+            border-radius: 32px;
+            background: #ffffff;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.08);
+        }
 
+        .info-panel h1 {
+            margin: 0 0 16px;
+            font-size: 2.6rem;
+        }
 
-    label {
-        font-size: 16px;
-        font-weight: 600;
-        color: #374151;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 2px;
-    }
+        .info-panel p {
+            margin: 0 0 24px;
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
 
+        .info-panel .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
 
-    input,select{
-        padding: 7px 15px;
-  margin: 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  width: 300px;
-  border-style: hidden;
-  box-shadow: 0px 0px 10px 0px #d1d5db;
-  color: #858484 !important;
-  border: 2px solid #d1d5db;
-  transition: all 0.3s ease;
-    }
+        .info-panel .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(37, 99, 235, 0.12);
+            color: var(--primary);
+            font-weight: 700;
+        }
 
-    select{
-        width: 335px !important;
-    }
+        .info-panel .feature-text {
+            font-size: 0.98rem;
+            color: var(--text);
+        }
 
-    input:focus, select:focus {
-        border-color: #3b82f6;
-        box-shadow: 0 0 10px rgba(59,130,246,0.2);
-        transform: scale(1.02);
-        outline: none;
-    }
+        .register-card {
+            background: var(--card);
+            border-radius: 32px;
+            padding: 40px 38px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
 
-    button {
-        width: 100%;
-        background: #2563eb;
-        border: none;
-        padding: 12px;
-        color: #fff;
-        font-weight: 600;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.4s ease;
-        box-shadow: 0 4px 10px rgba(37,99,235,0.3);
-    }
+        .register-card h2 {
+            margin: 0 0 10px;
+            font-size: 2rem;
+        }
 
-    button:hover {
-        background: #1e40af;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(37,99,235,0.4);
-    }
+        .register-card p.subtitle {
+            margin: 0 0 24px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
 
-    .login-link {
-        text-align: center;
-        margin-top: 10px;
-        font-size: 14px;
-    }
+        .input-group {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
 
-    .login-link a {
-        color: #2563eb;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
+        label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--muted);
+        }
 
-    .login-link a:hover {
-        color: #1d4ed8;
-        text-decoration: underline;
-    }
-p{
-    position: absolute;
-    bottom: 20px;
-}
-.form-style{
-    /* background-color: #dbf1feff; */
-  height: 525px;
-  width: 500px;
-  border-radius: 30px 0px;
-  align-content: center;
-  justify-items: center;
-  justify-self: center;
-  margin: 40px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1)
-}
+        input {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 16px;
+            font-size: 1rem;
+            color: var(--text);
+            background: #f8fbff;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
 
-p {
-    text-align: center;
-    font-size: 18px;
-}
-   a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 600;
-}
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        }
 
-    a:hover {
-        text-decoration: underline;
-    }
+        .btn-primary {
+            width: 100%;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
 
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
 
+        .note {
+            margin: 12px 0 18px;
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
 
-</style>
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .page-wrap {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
-<h2>Register</h2>
-<div class="form-style">
-<form method="POST" action="../includes/auth.php" onsubmit="return validatePassword();">
-    <label>Username:</label> 
-    <input type="text" name="username" required><br>
-    
+    <div class="page-wrap">
+        <section class="info-panel">
+            <h1>Create your account</h1>
+            <p>Join the secure authentication system as a verified user. Your account will be protected with strong password rules and OTP verification during signup.</p>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-text">Secure registration with OTP validation</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-text">Password strength enforcement for safer login</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <div class="feature-text">Fast access to your user dashboard</div>
+            </div>
+        </section>
 
-    <label>Email:</label> 
-    <input type="email" name="email" required><br>
+        <section class="register-card">
+            <h2>Create account</h2>
+            <p class="subtitle">Register with your details and receive an OTP to verify your email address.</p>
+            <form method="POST" action="../includes/auth.php" onsubmit="return validatePassword();">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="input-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" required>
+                </div>
+                <input type="hidden" name="role" value="user">
+                <p class="note">New registrations are created as <strong>User</strong> accounts only. Admin access is reserved for the fixed admin email.</p>
+                <button class="btn-primary" type="submit" name="register">Register</button>
+            </form>
+            <div class="login-link">
+                <p>Already registered? <a href="login.php">Login here</a></p>
+            </div>
+        </section>
+    </div>
 
-    <label>Password:</label> 
-    <input type="password" id="password" name="password" required><br>
+    <script>
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm_password').value;
+            const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
-    <label>Confirm Password:</label> 
-    <input type="password" id="confirm_password" required><br>
+            if (!pattern.test(password)) {
+                alert('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
+                return false;
+            }
 
-    <label>Role:</label>
-    <select name="role">
-        <option value="user" selected>User</option>
-        <option value="admin">Admin</option>
-    </select><br><br>
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return false;
+            }
 
-    <button type="submit" name="register">Register</button>
-</form>
-
-</div>
-
-<p>Already registered? <a href="login.php">Login</a></p>
-
-<script>
-function validatePassword() {
-    const password = document.getElementById('password').value;
-    const confirm = document.getElementById('confirm_password').value;
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
-    if (!pattern.test(password)) {
-        alert('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
-        return false;
-    }
-
-    if (password !== confirm) {
-        alert('Passwords do not match!');
-        return false;
-    }
-
-    return true;
-}
-</script>
+            return true;
+        }
+    </script>
 </body>
 </html>

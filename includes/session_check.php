@@ -12,9 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$stmt = $conn->prepare("SELECT id, username FROM users WHERE id=?");
-
-
+$stmt = $conn->prepare("SELECT id, username, email, role, blocked, blocked_until FROM users WHERE id=?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -31,6 +29,12 @@ if ($result->num_rows === 1) {
         session_destroy();
         exit();
     }
+
+    // Ensure session has up-to-date user info
+    $_SESSION['user_id'] = (int)$user['id'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['role'] = $role;
 
 } else {
     session_destroy();

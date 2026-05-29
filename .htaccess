@@ -1,0 +1,5 @@
+# Redirect root to the public login page
+DirectoryIndex index.php
+
+# Prevent directory listing
+Options -Indexes

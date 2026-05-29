@@ -36,17 +36,41 @@ function sendEmailOTP($to, $otp, $subject = "OTP Verification") {
     }
 
     try {
+        // Load mail configuration
+        $mail_config = include __DIR__ . '/../config/mail_config.php';
+        
+        // Validate configuration
+        if (empty($mail_config['username']) || $mail_config['username'] === 'your-email@gmail.com') {
+            echo "<p style='color:red;'>❌ Email not configured. Update config/mail_config.php with your Gmail and App Password.</p>";
+            return false;
+        }
+
         $mail = new PHPMailer(true);
 
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'manjot.kaur0226@gmail.com';
-        $mail->Password = 'zylkhfxikabbxwhv'; 
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        // Enable debugging if needed
+        if ($mail_config['debug']) {
+            $mail->SMTPDebug = 2;
+            $mail->Debugoutput = function($str, $level) {
+                echo '<pre style="color:#333; background:#f4f4f4; padding:8px; border-radius:4px;">' . htmlspecialchars($str) . '</pre>';
+            };
+        }
 
-        $mail->setFrom('manjot.kaur0226@gmail.com', 'Secure Authentication System');
+        $mail->isSMTP();
+        $mail->Host = $mail_config['smtp_host'];
+        $mail->SMTPAuth = $mail_config['smtp_auth_enabled'];
+        $mail->Username = $mail_config['username'];
+        $mail->Password = str_replace(' ', '', $mail_config['password']);
+        
+        // Set encryption method
+        if (strtolower($mail_config['smtp_secure']) === 'ssl') {
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = 465;
+        } else {
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = $mail_config['smtp_port'];
+        }
+
+        $mail->setFrom($mail_config['from_email'], $mail_config['from_name']);
         $mail->addAddress($to);
 
         $mail->isHTML(true);
@@ -55,14 +79,18 @@ function sendEmailOTP($to, $otp, $subject = "OTP Verification") {
             <h3>🔐 Email Verification</h3>
             <p>Your One-Time Password (OTP) is:</p>
             <h2 style='color:#0078D4;'>$otp</h2>
-            <p>This OTP is valid for 10 minutes.</p>
+            <p><strong>Valid for 10 minutes.</strong></p>
+            <p style='font-size: 12px; color: #999;'>If you didn't request this, please ignore this email.</p>
         ";
 
         $mail->send();
         echo "<p style='color:green;'>✅ OTP sent successfully to {$to}</p>";
         return true;
     } catch (Exception $e) {
-        echo "<p style='color:red;'>❌ Mailer Error: {$mail->ErrorInfo}</p>";
+        echo "<p style='color:red;'>❌ Mailer Error: {$e->getMessage()}</p>";
+        if (isset($mail)) {
+            echo "<p style='color:red;'>Details: {$mail->ErrorInfo}</p>";
+        }
         return false;
     }
 }

@@ -71,19 +71,49 @@ $displayName = $_SESSION['username']
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Welcome, <?php echo htmlspecialchars($displayName); ?> (Admin)</h1>
+<div class="container" style="display:flex; gap:22px; align-items:flex-start;">
+    <div style="flex:1">
+        <h1>Welcome, <?php echo htmlspecialchars($displayName); ?></h1>
 
-    <div class="card">
-        <h3>Admin Controls</h3>
-        <ul>
-            <li><a href="../admin/manage_users.php">Manage Users</a></li>
-            <li><a href="../admin/system_logs.php">System Logs</a></li>
-            <li><a href="../admin/compromise_requests.php">Report Compromise</a></li>
-        </ul>
+        <div class="card">
+            <h3>Admin Controls</h3>
+            <ul>
+                <li><a href="../admin/manage_users.php">Manage Users</a></li>
+                <li><a href="../admin/system_logs.php">System Logs</a></li>
+                <li><a href="../admin/compromise_requests.php">Report Compromise</a></li>
+                <li><a href="../public/units.php">Manage Unit Notes & Quizzes</a></li>
+            </ul>
+        </div>
     </div>
 
-    <a href="logout.php" class="logout">Logout</a>
+    <aside style="width:320px;">
+        <?php
+        $user_id = $_SESSION['user_id'];
+        $avatar = null;
+        foreach (['png','jpg','jpeg','gif'] as $ext) {
+            $path = __DIR__ . "/../assets/uploads/avatars/{$user_id}.{$ext}";
+            if (file_exists($path)) { $avatar = "../assets/uploads/avatars/{$user_id}.{$ext}"; break; }
+        }
+        ?>
+        <div class="card">
+            <div style="text-align:center; margin-bottom:12px;">
+                <?php if ($avatar): ?>
+                    <a href="profile.php"><img src="<?= htmlspecialchars($avatar) ?>" alt="avatar" style="width:120px;height:120px;border-radius:60px;object-fit:cover;border:4px solid #fff;box-shadow:0 6px 18px rgba(16,24,40,0.08)"></a>
+                <?php else: ?>
+                    <a href="profile.php"><div style="width:120px;height:120px;border-radius:60px;background:#e6eefc;display:inline-flex;align-items:center;justify-content:center;font-size:42px;color:#1e293b;">
+                        <?php echo strtoupper(substr($_SESSION['username'] ?? 'A',0,1)); ?></div></a>
+                <?php endif; ?>
+            </div>
+            <h3 style="text-align:center;margin-top:0;">Account Information</h3>
+            <ul style="list-style:none;padding:0;margin:8px 0 0 0">
+                <li><strong>Username:</strong> <?= htmlspecialchars($displayName) ?></li>
+                <li><strong>Email:</strong> <?= htmlspecialchars($_SESSION['email'] ?? 'Unknown') ?></li>
+                <li><strong>Role:</strong> Admin</li>
+            </ul>
+            <div style="text-align:center;margin-top:14px"><a href="profile.php">Manage profile</a></div>
+        </div>
+        <div style="text-align:center;margin-top:12px"><a href="logout.php" class="logout">Logout</a></div>
+    </aside>
 </div>
 
 <script src="../assets/js/popup.js"></script>

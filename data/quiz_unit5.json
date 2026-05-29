@@ -1,0 +1,37 @@
+{
+  "unit": 5,
+  "title": "Unit 5 Quiz - Routing & Congestion Control",
+  "questions": [
+    {"q":"Which OSI layer is responsible for routing?","options":["Data Link Layer","Transport Layer","Network Layer","Session Layer"],"a":2},
+    {"q":"Routing is the process of:","options":["Encrypting data","Selecting best path for packets","Compressing files","Detecting errors"],"a":1},
+    {"q":"Which routing type is manually configured?","options":["Dynamic Routing","Static Routing","Hybrid Routing","Adaptive Routing"],"a":1},
+    {"q":"Which routing automatically updates routing tables?","options":["Static Routing","Manual Routing","Dynamic Routing","Fixed Routing"],"a":2},
+    {"q":"Which algorithm is used for shortest path calculation?","options":["Bellman-Ford","RSA","Dijkstra","AES"],"a":2},
+    {"q":"Dijkstra algorithm is mainly used in:","options":["RIP","OSPF","HTTP","FTP"],"a":1},
+    {"q":"Distance Vector Routing uses:","options":["Bellman-Ford Algorithm","Dijkstra Algorithm","Prim’s Algorithm","Kruskal Algorithm"],"a":0},
+    {"q":"In Distance Vector Routing, routers share:","options":["Entire files","Routing tables","Passwords","Frames"],"a":1},
+    {"q":"Which problem occurs in Distance Vector Routing?","options":["Collision Problem","Count-to-Infinity Problem","Fragmentation Problem","Encryption Problem"],"a":1},
+    {"q":"Which technique solves routing loops?","options":["Compression","Split Horizon","Multiplexing","Framing"],"a":1},
+    {"q":"Link State Routing uses:","options":["Complete network topology","Only neighbor information","No routing tables","MAC addresses only"],"a":0},
+    {"q":"Which routing converges faster?","options":["Distance Vector","Link State","Static Routing","Manual Routing"],"a":1},
+    {"q":"RIP is a:","options":["Link State Protocol","Distance Vector Protocol","Transport Protocol","Application Protocol"],"a":1},
+    {"q":"RIP uses which metric?","options":["Delay","Cost","Hop Count","Bandwidth"],"a":2},
+    {"q":"Maximum hop count in RIP is:","options":["10","15","20","30"],"a":1},
+    {"q":"OSPF stands for:","options":["Open Shortest Path First","Open System Packet Forwarding","Optical Service Path Finder","Open Standard Packet Flow"],"a":0},
+    {"q":"OSPF is a:","options":["Distance Vector Protocol","Link State Protocol","Hybrid Protocol","Transport Protocol"],"a":1},
+    {"q":"BGP stands for:","options":["Border Gateway Protocol","Basic Gateway Protocol","Binary Gateway Path","Broadband Gateway Protocol"],"a":0},
+    {"q":"BGP is mainly used:","options":["Inside LAN","Inside one router","Between Autonomous Systems","In physical layer"],"a":2},
+    {"q":"Congestion occurs when:","options":["Traffic exceeds capacity","Data is encrypted","Routing table is empty","Frames are compressed"],"a":0},
+    {"q":"Which is NOT an effect of congestion?","options":["Packet loss","Increased delay","High throughput","Network slowdown"],"a":2},
+    {"q":"Open Loop Congestion Control is:","options":["Feedback-based","Prevention-based","Encryption-based","Error-based"],"a":1},
+    {"q":"Closed Loop Congestion Control uses:","options":["Feedback","Encryption","Multiplexing","CRC"],"a":0},
+    {"q":"Which congestion technique sends warning packets?","options":["Choke Packet","Fragmentation","Piggybacking","Flooding"],"a":0},
+    {"q":"Which algorithm sends packets at fixed rate?","options":["Token Bucket","Leaky Bucket","Dijkstra","Bellman-Ford"],"a":1},
+    {"q":"Which algorithm allows burst traffic?","options":["Leaky Bucket","Token Bucket","RIP","OSPF"],"a":1},
+    {"q":"QoS stands for:","options":["Quality of Signal","Quantity of Service","Quality of Service","Queue of Service"],"a":2},
+    {"q":"Jitter means:","options":["Packet size","Variation in delay","Bandwidth increase","Error detection"],"a":1},
++    {"q":"Which protocol uses UDP port 520?","options":["OSPF","BGP","RIP","HTTP"],"a":2},
++    {"q":"Which routing protocol is best for large networks?","options":["RIP","Static Routing","OSPF","Manual Routing"],"a":2}
++  ]
++}
++

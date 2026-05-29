@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS secure_auth;
-USE secure_auth;
+-- CREATE DATABASE IF NOT EXISTS secure_auth;
+-- USE secure_auth;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -51,6 +51,6 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- default admin (password: Admin@123)
+-- default admin (password: Grewal@29)
 INSERT INTO users (username, email, password, role) VALUES
-('admin','admin@example.com', '$2y$10$e0NRqZ7wqv6aQ0tQpHrQku2f6r8mE5Zx1kO9mQqfS6Vt/1sXkE0xK', 'admin');
+('admin','manjotkaur311205@gmail.com', '$2y$10$sSUfLr1vkYK5JVyKf3YRieWTyQ/BNgLPNQBJYvNZWNEMcc5kNznTm', 'admin');

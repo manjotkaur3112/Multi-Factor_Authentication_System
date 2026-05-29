@@ -34,3 +34,26 @@ The Secure Authentication Module for Operating Systems enhances system security 
 - PHPMailer
 - HTML, CSS, JS
 - XAMPP / WAMP
+
+🚀 Deploy on Render
+1. Create a new Render Web Service from this repository.
+2. Use the `php` environment.
+3. Set the build command to `composer install`.
+4. Set the start command to `php -S 0.0.0.0:$PORT -t public`.
+5. Create a managed MySQL database in Render or a separate MySQL service.
+6. Add the following environment variables in Render:
+   - `DB_HOST`
+   - `DB_DATABASE`
+   - `DB_USER`
+   - `DB_PASSWORD`
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_SECURE`
+   - `SMTP_AUTH_ENABLED`
+   - `MAIL_FROM_ADDRESS`
+   - `MAIL_FROM_NAME`
+   - `SMTP_USERNAME`
+   - `SMTP_PASSWORD`
+   - `MAIL_DEBUG`
+7. Point Render to the `public` folder as the web root using the start command above.
+

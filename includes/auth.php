@@ -4,15 +4,21 @@ include_once '../config/db.php';
 include_once '../includes/functions.php';
 include_once '../includes/log_action.php';
 
+define('FIXED_ADMIN_EMAIL', 'manjotkaur311205@gmail.com');
+
 function generateOTP($length = 6) {
     return rand(pow(10, $length - 1), pow(10, $length) - 1);
 }
 
 if (isset($_POST['register'])) {
     $username = sanitize($_POST['username']);
-    $email    = sanitize($_POST['email']);
+    $email    = strtolower(sanitize($_POST['email']));
     $password = $_POST['password'];
-    $role     = $_POST['role'];
+    $role     = 'user';
+
+    if ($email === FIXED_ADMIN_EMAIL) {
+        $role = 'admin';
+    }
 
     $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $check->bind_param("s", $email);

@@ -35,6 +35,27 @@ The Secure Authentication Module for Operating Systems enhances system security 
 - HTML, CSS, JS
 - XAMPP / WAMP
 
+🚀 Deploy on Railway
+1. Create a new project on [Railway](https://railway.app).
+2. Connect your GitHub repository.
+3. Add a MySQL database service in Railway.
+4. Set the following environment variables:
+   - `DB_HOST` → Railway MySQL hostname
+   - `DB_DATABASE` → `secure_auth`
+   - `DB_USER` → Railway MySQL user
+   - `DB_PASSWORD` → Railway MySQL password
+   - `SMTP_HOST` → `smtp.gmail.com` (or your provider)
+   - `SMTP_PORT` → `587`
+   - `SMTP_SECURE` → `tls`
+   - `SMTP_AUTH_ENABLED` → `true`
+   - `MAIL_FROM_ADDRESS` → Your email
+   - `MAIL_FROM_NAME` → `Secure Authentication System`
+   - `SMTP_USERNAME` → Your Gmail/SMTP username
+   - `SMTP_PASSWORD` → Your Gmail App Password
+   - `MAIL_DEBUG` → `false`
+5. Railway will auto-detect the `Dockerfile` and deploy automatically.
+6. The app will be live at your Railway URL.
+
 🚀 Deploy on Render
 1. Create a new Render Web Service from this repository.
 2. Use the `php` environment.
